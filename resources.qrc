@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>ikony/bike-.png</file>
+        <file>ikony/challenge.png</file>
+        <file>ikony/invoice.png</file>
+        <file>ikony/membership-card.png</file>
+        <file>ikony/padlock.png</file>
+        <file>ikony/seo-report.png</file>
+        <file>ikony/store.png</file>
+        <file>ikony/team.png</file>
+        <file>ikony/trainer.png</file>
+        <file>ikony/15536420761558096328-128.png</file>
+    </qresource>
+</RCC>
