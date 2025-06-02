@@ -323,7 +323,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayoutMain">
@@ -810,7 +810,272 @@ email: martin.paszow@fitadmin.com</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2"/>
+      <widget class="QWidget" name="trenerzyStrona">
+       <layout class="QVBoxLayout" name="verticalLayoutTrenerzy">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutTrenerzyForm">
+          <item>
+           <widget class="QLabel" name="labelImieTrener">
+            <property name="text">
+             <string>Imię</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditImieTrener"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="labelNazwiskoTrener">
+            <property name="text">
+             <string>Nazwisko</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditNazwiskoTrener"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButtonDodajTrenera">
+            <property name="text">
+             <string>Dodaj trenera</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidgetTrenerzy">
+          <property name="dragDropOverwriteMode">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>0</number>
+          </property>
+          <property name="columnCount">
+           <number>3</number>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Imię</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Nazwisko</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="zajeciaStrona">
+       <layout class="QVBoxLayout" name="verticalLayoutZajeciaWrapper">
+        <item>
+         <widget class="QScrollArea" name="scrollAreaZajecia">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContentsZajecia">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>800</width>
+             <height>650</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayoutZajecia">
+            <item>
+             <layout class="QFormLayout" name="formLayoutZajecia">
+              <item row="0" column="0">
+               <widget class="QLabel" name="labelTrenerProwadzacy">
+                <property name="text">
+                 <string>Trener prowadzący</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="comboBoxTrenerProwadzacy"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="labelDataGodzinaStart">
+                <property name="text">
+                 <string>Data i godz. rozpoczęcia</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDateTimeEdit" name="dateTimeEditStart">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="labelDataGodzinaEnd">
+                <property name="text">
+                 <string>Data i godz. zakończenia</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDateTimeEdit" name="dateTimeEditEnd">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="labelSala">
+                <property name="text">
+                 <string>Sala</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="lineEditSala"/>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="labelLimitMiejsc">
+                <property name="text">
+                 <string>Limit miejsc</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="spinBoxLimitMiejsc">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QToolButton" name="toolButtonDodajZajecia">
+                <property name="text">
+                 <string>Dodaj zajęcia</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QToolButton" name="toolButtonUsunZajecia">
+                <property name="text">
+                 <string>Usuń zajęcia</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tableWidgetZajecia">
+              <property name="columnCount">
+               <number>6</number>
+              </property>
+              <column>
+               <property name="text">
+                <string>Trener</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Początek</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Koniec</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Sala</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Limit miejsc</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Wolnych miejsc</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayoutWykresZajec"/>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="sklepStrona">
+       <layout class="QVBoxLayout" name="verticalLayoutSklep">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutSklepSearchAdd">
+          <item>
+           <widget class="QLineEdit" name="lineEditSzukajProdukt">
+            <property name="placeholderText">
+             <string>Szukaj produktu...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButtonDodajProdukt">
+            <property name="text">
+             <string>Dodaj produkt</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidgetProdukty">
+          <property name="columnCount">
+           <number>5</number>
+          </property>
+          <column>
+           <property name="text">
+            <string>Nazwa</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Cena</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Kategoria</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Stan magazynowy</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

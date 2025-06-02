@@ -3,15 +3,16 @@
 using namespace std;
 
 Czlonek::Czlonek(
-        const string& imie,
-        const string& nazwisko,
-        bool aktywny,
-        const QDate& dataAktywacji,
-        const QDate& dataWygasniecia,
-        const string& nazwaKarnetu,
-        int pozostalychWejsc
+    const string& imie,
+    const string& nazwisko,
+    bool aktywny,
+    const QDate& dataAktywacji,
+    const QDate& dataWygasniecia,
+    const string& nazwaKarnetu,
+    int pozostalychWejsc
     )
-    : imie(imie), nazwisko(nazwisko), aktywny(aktywny),
+    : Osoba(imie, nazwisko),
+    aktywny(aktywny),
     dataAktywacji(dataAktywacji),
     dataWygasniecia(dataWygasniecia),
     nazwaKarnetu(nazwaKarnetu),
@@ -27,14 +28,6 @@ void Czlonek::setPozostalychWejsc(int pozostalychWejsc){
 
 string Czlonek::getNazwaKarnetu() const {
     return nazwaKarnetu;
-}
-
-string Czlonek::getImie() const {
-    return imie;
-}
-
-string Czlonek::getNazwisko() const {
-    return nazwisko;
 }
 
 bool Czlonek::czyAktywny() const {
