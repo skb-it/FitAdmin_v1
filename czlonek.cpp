@@ -1,24 +1,27 @@
 #include "czlonek.h"
-#include <sstream>
 
 using namespace std;
 
-int Czlonek::licznikKarnetow = 0;
+Czlonek::Czlonek(const string& imie, const string& nazwisko,
+                 bool aktywny, const QDateTime& dataWygasniecia,
+                 const string& nazwaKarnetu, int pozostalychWejsc)
+    : imie(imie), nazwisko(nazwisko), aktywny(aktywny),
+    dataAktywacji(QDateTime::currentDateTime()),
+    dataWygasniecia(dataWygasniecia),
+    nazwaKarnetu(nazwaKarnetu),
+    pozostalychWejsc(pozostalychWejsc)
+{}
 
-string Czlonek::generujNumerKarnetu() {
-    licznikKarnetow++;
-    ostringstream ss;
-    ss << "KN" << 1000 + licznikKarnetow; // np. KN1001, KN1002, ...
-    return ss.str();
+int Czlonek::getPozostalychWejsc() const {
+    return pozostalychWejsc;
+}
+void Czlonek::setPozostalychWejsc(int pozostalychWejsc){
+    this->pozostalychWejsc = pozostalychWejsc;
 }
 
-Czlonek::Czlonek(const string& imie, const string& nazwisko,
-                 bool aktywny, const QDateTime& dataWygasniecia)
-    : imie(imie), nazwisko(nazwisko), aktywny(aktywny),
-    dataAktywacji(QDateTime::currentDateTime()), // ustawiamy teraz
-    dataWygasniecia(dataWygasniecia),
-    numerKarnetu(generujNumerKarnetu()) // generujemy numer
-{}
+string Czlonek::getNazwaKarnetu() const {
+    return nazwaKarnetu;
+}
 
 string Czlonek::getImie() const {
     return imie;
@@ -26,10 +29,6 @@ string Czlonek::getImie() const {
 
 string Czlonek::getNazwisko() const {
     return nazwisko;
-}
-
-string Czlonek::getNumerKarnetu() const {
-    return numerKarnetu;
 }
 
 bool Czlonek::czyAktywny() const {

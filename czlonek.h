@@ -10,27 +10,26 @@ class Czlonek {
 private:
     string imie;
     string nazwisko;
-    string numerKarnetu;
+    string nazwaKarnetu;
     bool aktywny;
     QDateTime dataAktywacji;
     QDateTime dataWygasniecia;
-
-    static int licznikKarnetow; // licznik do generowania nr karnetu
-
-    string generujNumerKarnetu();
+    int pozostalychWejsc;
 
 public:
-    // Konstruktor bez numeru karnetu i daty aktywacji — ustawiane automatycznie
     Czlonek(const string& imie, const string& nazwisko,
-            bool aktywny, const QDateTime& dataWygasniecia);
+            bool aktywny, const QDateTime& dataWygasniecia,
+            const string& nazwaKarnetu, int pozostalychWejsc);
 
-    // Gettery
     string getImie() const;
     string getNazwisko() const;
     string getNumerKarnetu() const;
+    string getNazwaKarnetu() const;
     bool czyAktywny() const;
     QDateTime getDataAktywacji() const;
     QDateTime getDataWygasniecia() const;
+    int getPozostalychWejsc() const;
+    void setPozostalychWejsc(int pozostalychWejsc);
 };
 
 #endif // CZLONEK_H

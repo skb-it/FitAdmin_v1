@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>951</width>
-    <height>698</height>
+    <width>1044</width>
+    <height>731</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -323,9 +323,189 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="page"/>
+      <widget class="QWidget" name="mainPage">
+       <layout class="QVBoxLayout" name="verticalLayoutMain">
+        <item>
+         <spacer name="verticalSpacerTop">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelAppTitle">
+          <property name="font">
+           <font>
+            <pointsize>28</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>FitAdmin</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelAppDesc">
+          <property name="text">
+           <string>Kompleksowy system do zarządzania klubem fitness: obsługa członków, karnetów, zajęć, trenerów, sklepu i raportów.</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutCenter">
+          <item>
+           <spacer name="horizontalSpacerLeft">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayoutContent">
+            <item>
+             <widget class="QGroupBox" name="groupBoxAuthors">
+              <property name="title">
+               <string>Autorzy</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayoutAuthors">
+               <item>
+                <widget class="QLabel" name="labelAuthor1">
+                 <property name="text">
+                  <string>Szymon Skibiński
+email: szymon.skibinski@fitadmin.com</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignLeading</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="labelAuthor2">
+                 <property name="text">
+                  <string>Martin Paszow
+email: martin.paszow@fitadmin.com</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignLeading</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBoxInfo">
+              <property name="title">
+               <string>Informacje o programie</string>
+              </property>
+              <layout class="QFormLayout" name="formLayoutInfo">
+               <item row="0" column="0">
+                <widget class="QLabel" name="labelVersion">
+                 <property name="text">
+                  <string>Wersja:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="labelVersionValue">
+                 <property name="text">
+                  <string>1.0.0 (czerwiec 2025)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="labelLicense">
+                 <property name="text">
+                  <string>Licencja:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLabel" name="labelLicenseValue">
+                 <property name="text">
+                  <string>MIT</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="labelProject">
+                 <property name="text">
+                  <string>Projekt na JIPP</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLabel" name="labelSubject">
+                 <property name="text">
+                  <string>Politechnika Krakowska</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacerRight">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacerBottom">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="czlonkowieStrona">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
@@ -338,18 +518,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEditImie">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="lineEditNazwisko">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="lineEditImie"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="labelNazwisko">
@@ -358,25 +527,59 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditNazwisko"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelKarnet">
+            <property name="text">
+             <string>Karnet</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
+           <widget class="QComboBox" name="comboBoxKarnet"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Wygaśnięcie</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
            <widget class="QDateTimeEdit" name="dateTimeEditWygasniecie">
+            <property name="minimumDateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2025</year>
+              <month>6</month>
+              <day>2</day>
+             </datetime>
+            </property>
+            <property name="minimumDate">
+             <date>
+              <year>2025</year>
+              <month>6</month>
+              <day>2</day>
+             </date>
+            </property>
             <property name="calendarPopup">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QToolButton" name="toolButtonDodajCzlonka">
             <property name="text">
              <string>Dodaj członka</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QTableWidget" name="tableWidgetCzlonkowie">
-            <property name="sizeAdjustPolicy">
-             <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
-            </property>
             <property name="columnCount">
              <number>6</number>
             </property>
@@ -398,7 +601,7 @@
             </column>
             <column>
              <property name="text">
-              <string>Nr Karnetu</string>
+              <string>Karnet</string>
              </property>
             </column>
             <column>
@@ -408,7 +611,7 @@
             </column>
             <column>
              <property name="text">
-              <string>Aktywacja</string>
+              <string>Pozostałych Wejść</string>
              </property>
             </column>
             <column>
@@ -418,10 +621,174 @@
             </column>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label">
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="karnetyStrona">
+       <layout class="QVBoxLayout" name="verticalLayoutKarnety">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutSearchAdd">
+          <item>
+           <widget class="QLineEdit" name="lineEditSzukajKarnet">
+            <property name="placeholderText">
+             <string>Szukaj karnetu...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButtonDodajKarnet">
             <property name="text">
-             <string>Wygaśnięcie</string>
+             <string>Dodaj karnet</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidgetKarnety">
+          <property name="columnCount">
+           <number>5</number>
+          </property>
+          <column>
+           <property name="text">
+            <string>Nazwa</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Cena</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Czas trwania</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Limit wejść</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="formLayoutKarnet">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelNazwaKarnetu">
+            <property name="text">
+             <string>Nazwa karnetu</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEditNazwaKarnetu"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelCena">
+            <property name="text">
+             <string>Cena</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxCena">
+            <property name="suffix">
+             <string> zł</string>
+            </property>
+            <property name="minimum">
+             <double>0.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelCzasTrwania">
+            <property name="text">
+             <string>Czas trwania (dni)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="spinBoxCzasTrwania">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>365</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelLimitWejsc">
+            <property name="text">
+             <string>Limit wejść</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="spinBoxLimitWejsc">
+            <property name="toolTip">
+             <string>0 = nielimitowane</string>
+            </property>
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelStatus">
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="comboBoxStatus">
+            <item>
+             <property name="text">
+              <string>Aktywny</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Nieaktywny</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayoutKarnetyActions">
+          <item>
+           <widget class="QToolButton" name="toolButtonZapiszKarnet">
+            <property name="text">
+             <string>Zapisz</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButtonUsunKarnet">
+            <property name="text">
+             <string>Usuń</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="toolButtonDezaktywujKarnet">
+            <property name="text">
+             <string>Dezaktywuj</string>
             </property>
            </widget>
           </item>
@@ -429,6 +796,7 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_2"/>
      </widget>
     </item>
    </layout>
@@ -438,8 +806,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>951</width>
-     <height>25</height>
+     <width>1044</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
