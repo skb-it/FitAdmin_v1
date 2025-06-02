@@ -23,6 +23,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FitAdmin
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        mainwindow.h mainwindow.cpp mainwindow.ui
+        resources.qrc
+        osoba.h osoba.cpp
+        czlonek.h czlonek.cpp
+        czlonkowie_manager.h czlonkowie_manager.cpp
+        karnet.h karnet.cpp
+        karnety_manager.h karnety_manager.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET FitAdmin APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
