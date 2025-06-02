@@ -240,58 +240,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="toolButtonFaktury">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>FAKTURY</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/ikony/invoice.png</normaloff>:/icons/ikony/invoice.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>40</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButtonRaporty">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>RAPORTY</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/ikony/seo-report.png</normaloff>:/icons/ikony/seo-report.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>40</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="toolButtonStyle">
-          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QToolButton" name="toolButtonWyloguj">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -323,7 +271,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QVBoxLayout" name="verticalLayoutMain">
@@ -888,8 +836,8 @@ email: martin.paszow@fitadmin.com</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>800</width>
-             <height>650</height>
+             <width>791</width>
+             <height>635</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayoutZajecia">
@@ -1022,6 +970,60 @@ email: martin.paszow@fitadmin.com</string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="sprzetStrona">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="4" column="0">
+         <widget class="QToolButton" name="toolButtonUsun">
+          <property name="text">
+           <string>Usuń</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QToolButton" name="toolButtonDodaj">
+          <property name="text">
+           <string>Dodaj</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QTableWidget" name="tableWidgetSprzet">
+          <column>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>New Column</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Nazwa</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Ilość</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Data przeglądu</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QToolButton" name="toolButtonEdytuj">
+          <property name="text">
+           <string>Edytuj</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="sklepStrona">
        <layout class="QVBoxLayout" name="verticalLayoutSklep">
         <item>
@@ -1086,7 +1088,7 @@ email: martin.paszow@fitadmin.com</string>
      <x>0</x>
      <y>0</y>
      <width>1044</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

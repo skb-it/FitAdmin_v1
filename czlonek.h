@@ -3,12 +3,13 @@
 
 #include "osoba.h"
 
-#include <string>
 #include <QDateTime>
+#include <string>
 
 using namespace std;
 
-class Czlonek : public Osoba {
+class Czlonek : public Osoba
+{
     bool aktywny;
     QDate dataAktywacji;
     QDate dataWygasniecia;
@@ -16,15 +17,13 @@ class Czlonek : public Osoba {
     int pozostalychWejsc;
 
 public:
-    Czlonek(
-        const string& imie,
-        const string& nazwisko,
-        bool aktywny,
-        const QDate& dataAktywacji,
-        const QDate& dataWygasniecia,
-        const string& nazwaKarnetu,
-        int pozostalychWejsc
-        );
+    Czlonek(const string &imie,
+            const string &nazwisko,
+            bool aktywny,
+            const QDate &dataAktywacji,
+            const QDate &dataWygasniecia,
+            const string &nazwaKarnetu,
+            int pozostalychWejsc);
 
     string getNumerKarnetu() const;
     string getNazwaKarnetu() const;

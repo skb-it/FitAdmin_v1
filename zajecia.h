@@ -1,10 +1,11 @@
 #ifndef ZAJECIA_H
 #define ZAJECIA_H
 
-#include <QString>
 #include <QDateTime>
+#include <QString>
 
-class Zajecia {
+class Zajecia
+{
     int idTrenera;
     QString trenerImieNazwisko;
     QDateTime start, end;
@@ -13,9 +14,12 @@ class Zajecia {
     int wolnychMiejsc;
 
 public:
-    Zajecia(int idTrenera, const QString& trenerImieNazwisko,
-            const QDateTime& start, const QDateTime& end,
-            const QString& sala, int limitMiejsc);
+    Zajecia(int idTrenera,
+            const QString &trenerImieNazwisko,
+            const QDateTime &start,
+            const QDateTime &end,
+            const QString &sala,
+            int limitMiejsc);
 
     int getIdTrenera() const;
     QString getTrenerImieNazwisko() const;

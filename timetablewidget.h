@@ -3,20 +3,21 @@
 
 #include "zajecia.h"
 
-#include <QWidget>
 #include <QDateTime>
-#include <vector>
 #include <QString>
+#include <QWidget>
+#include <vector>
 
-class TimetableWidget : public QWidget {
+class TimetableWidget : public QWidget
+{
     Q_OBJECT
 public:
-    explicit TimetableWidget(QWidget* parent = nullptr);
+    explicit TimetableWidget(QWidget *parent = nullptr);
 
-    void setZajecia(const std::vector<Zajecia>& zajecia);
+    void setZajecia(const std::vector<Zajecia> &zajecia);
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     std::vector<Zajecia> m_zajecia;

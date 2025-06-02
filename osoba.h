@@ -5,9 +5,10 @@
 
 using namespace std;
 
-class Osoba {
+class Osoba
+{
 public:
-    Osoba(const string& imie, const string& nazwisko);
+    Osoba(const string &imie, const string &nazwisko);
 
     string getImie() const;
     string getNazwisko() const;

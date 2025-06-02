@@ -1,12 +1,13 @@
 #include "logowanie.h"
-#include "ui_logowanie.h"
-#include <QMessageBox>
 #include <QCryptographicHash>
 #include <QFile>
-#include <QTextStream>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <QTextStream>
+#include "ui_logowanie.h"
 
-QString hashPassword(const QString &password) {
+QString hashPassword(const QString &password)
+{
     QByteArray hashed = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256);
     return QString(hashed.toHex());
 }
@@ -23,10 +24,14 @@ Logowanie::Logowanie(QWidget *parent)
         QFile file(configPath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
-            out << "admin " << "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4" << "\n"; //admin; 1234
+            out << "admin " << "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+                << "\n"; //admin; 1234
             file.close();
         }
-        QMessageBox::warning(this, "Pierwsze uruchomienie", "Używasz domyślnego loginu i hasła. Proszę zmień domyślne hasło po zalogowaniu!");
+        QMessageBox::warning(
+            this,
+            "Pierwsze uruchomienie",
+            "Używasz domyślnego loginu i hasła. Proszę zmień domyślne hasło po zalogowaniu!");
     }
 }
 

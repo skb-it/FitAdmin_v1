@@ -35,6 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         zajecia.h zajecia.cpp
         zajecia_manager.h zajecia_manager.cpp
         timetablewidget.h timetablewidget.cpp
+        sprzet_manager.h sprzet_manager.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET FitAdmin APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -2,19 +2,22 @@
 #include <QFile>
 #include <QTextStream>
 
-void CzlonkowieManager::dodajCzlonka(const Czlonek& czlonek) {
+void CzlonkowieManager::dodajCzlonka(const Czlonek &czlonek)
+{
     listaCzlonkow.push_back(czlonek);
 }
 
-vector<Czlonek> CzlonkowieManager::getCzlonkowie() const{
+vector<Czlonek> CzlonkowieManager::getCzlonkowie() const
+{
     return listaCzlonkow;
 }
 
-void CzlonkowieManager::zapiszDoPliku(const QString& nazwaPliku) {
+void CzlonkowieManager::zapiszDoPliku(const QString &nazwaPliku)
+{
     QFile file(nazwaPliku);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
-        for (const auto& czlonek : listaCzlonkow) {
+        for (const auto &czlonek : listaCzlonkow) {
             out << QString::fromStdString(czlonek.getImie()) << ","
                 << QString::fromStdString(czlonek.getNazwisko()) << ","
                 << QString::fromStdString(czlonek.getNazwaKarnetu()) << ","
@@ -27,7 +30,8 @@ void CzlonkowieManager::zapiszDoPliku(const QString& nazwaPliku) {
     }
 }
 
-bool CzlonkowieManager::wczytajZPliku(const QString& nazwaPliku) {
+bool CzlonkowieManager::wczytajZPliku(const QString &nazwaPliku)
+{
     QFile file(nazwaPliku);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return false;
@@ -49,7 +53,13 @@ bool CzlonkowieManager::wczytajZPliku(const QString& nazwaPliku) {
         QDate dataAktywacji = QDate::fromString(fields[5], "yyyy-MM-dd");
         QDate dataWygasniecia = QDate::fromString(fields[6], "yyyy-MM-dd");
 
-        Czlonek czlonek(imie, nazwisko, aktywny, dataAktywacji, dataWygasniecia, nazwaKarnetu, pozostalychWejsc);
+        Czlonek czlonek(imie,
+                        nazwisko,
+                        aktywny,
+                        dataAktywacji,
+                        dataWygasniecia,
+                        nazwaKarnetu,
+                        pozostalychWejsc);
 
         listaCzlonkow.push_back(czlonek);
     }

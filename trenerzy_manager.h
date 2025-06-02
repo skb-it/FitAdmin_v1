@@ -2,17 +2,18 @@
 #define TRENERZY_MANAGER_H
 
 #include <QString>
-#include <vector>
 #include "trener.h"
+#include <vector>
 
-class TrenerzyManager {
+class TrenerzyManager
+{
 public:
-    void dodajTrenera(const Trener& t);
+    void dodajTrenera(const Trener &t);
     void usunTrenera(int index);
-    std::vector<Trener>& getTrenerzy();
-    const Trener& getTrener(int index) const;
-    bool zapiszDoPliku(const QString& sciezkaPliku) const;
-    bool wczytajZPliku(const QString& sciezkaPliku);
+    std::vector<Trener> &getTrenerzy();
+    const Trener &getTrener(int index) const;
+    bool zapiszDoPliku(const QString &sciezkaPliku) const;
+    bool wczytajZPliku(const QString &sciezkaPliku);
 
 private:
     std::vector<Trener> trenerzy;

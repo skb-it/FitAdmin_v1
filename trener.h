@@ -3,11 +3,12 @@
 
 #include "osoba.h"
 
-class Trener : public Osoba{
+class Trener : public Osoba
+{
     int id;
 
 public:
-    Trener(int id, const string& imie, const string& nazwisko);
+    Trener(int id, const string &imie, const string &nazwisko);
 
     int getId() const;
 };

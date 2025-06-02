@@ -4,10 +4,16 @@
 
 #include <QString>
 
-class Karnet {
+class Karnet
+{
 public:
-    Karnet(const QString& nazwa, double cena, int czasTrwania, int limitWejsc, bool aktywny)
-        : nazwa(nazwa), cena(cena), czasTrwania(czasTrwania), limitWejsc(limitWejsc), aktywny(aktywny) {}
+    Karnet(const QString &nazwa, double cena, int czasTrwania, int limitWejsc, bool aktywny)
+        : nazwa(nazwa)
+        , cena(cena)
+        , czasTrwania(czasTrwania)
+        , limitWejsc(limitWejsc)
+        , aktywny(aktywny)
+    {}
 
     QString getNazwa() const { return nazwa; }
     double getCena() const { return cena; }
@@ -19,7 +25,7 @@ public:
     void setCena(double c) { cena = c; }
     void setCzasTrwania(int t) { czasTrwania = t; }
     void setLimitWejsc(int l) { limitWejsc = l; }
-    void setNazwa(const QString& n) { nazwa = n; }
+    void setNazwa(const QString &n) { nazwa = n; }
 
 private:
     QString nazwa;

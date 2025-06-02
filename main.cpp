@@ -1,7 +1,7 @@
+#include <QApplication>
+#include "czlonkowie_manager.h"
 #include "logowanie.h"
 #include "mainwindow.h"
-#include "czlonkowie_manager.h"
-#include <QApplication>
 
 CzlonkowieManager czlonkowieManager;
 
