@@ -12,12 +12,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    karnetyManager.wczytajZPliku("karnety.txt");
     ui->stackedWidget->setCurrentIndex(0); // zawsze ustawiaj stronę 0 po uruchomieniu aplikacji
     connect(ui->toolButtonPanel, &QToolButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentIndex(0);  // Przełącz na stronę 0
     });
 
     connect(ui->toolButtonCzlonkowie, &QToolButton::clicked, this, [this]() {
+        czlonkowieManager.wczytajZPliku("czlonkowie.txt");
+        odswiezTabeleCzlonkowie();
+        ui->dateTimeEditRozpoczecie->setMinimumDate(QDate::currentDate());
+        ui->dateTimeEditRozpoczecie->setDate(QDate::currentDate());
         ui->stackedWidget->setCurrentIndex(1);  // Przełącz na stronę 1 (np. członkowie)
         ui->comboBoxKarnet->clear();
         for (const auto& k : karnetyManager.getKarnety()) {
@@ -50,11 +55,13 @@ void MainWindow::on_toolButtonDodajCzlonka_clicked()
 {
     QString imie = ui->lineEditImie->text();
     QString nazwisko = ui->lineEditNazwisko->text();
+    if(imie.trimmed().isEmpty() || nazwisko.trimmed().isEmpty()){
+        QMessageBox::warning(this, "Błąd", "Imie oraz Nazwisko nie mogą być puste!");
+        return;
+    }
 
-    // Pobierz wybrany karnet z comboBox
     QString nazwaKarnetu = ui->comboBoxKarnet->currentText();
 
-    // Możesz znaleźć wybrany karnet w managerze, aby ustawić czas trwania
     int idx = ui->comboBoxKarnet->currentIndex();
     if (idx < 0) {
         QMessageBox::warning(this, "Błąd", "Wybierz karnet!");
@@ -62,31 +69,20 @@ void MainWindow::on_toolButtonDodajCzlonka_clicked()
     }
     const Karnet& wybranyKarnet = karnetyManager.getKarnety()[idx];
 
-    // Data wygaśnięcia zależna od wybranego karnetu
-    QDateTime dataWygasniecia = QDateTime::currentDateTime().addDays(wybranyKarnet.getCzasTrwania());
+    QDate dataRozpoczecia = ui->dateTimeEditRozpoczecie->date();
+    QDate dataWygasniecia = dataRozpoczecia.addDays(wybranyKarnet.getCzasTrwania());
 
-    // Tworzymy obiekt Czlonek z nazwą karnetu
-    Czlonek nowyCzlonek(imie.toStdString(), nazwisko.toStdString(), true, dataWygasniecia, nazwaKarnetu.toStdString(), wybranyKarnet.getLimitWejsc());
+    Czlonek nowyCzlonek(imie.toStdString(), nazwisko.toStdString(), true, dataRozpoczecia, dataWygasniecia, nazwaKarnetu.toStdString(), wybranyKarnet.getLimitWejsc());
 
-    // Dodaj do managera
     czlonkowieManager.dodajCzlonka(nowyCzlonek);
+    czlonkowieManager.zapiszDoPliku("czlonkowie.txt");
 
-    // Dodaj do tabeli (bez numeru karnetu)
-    int row = ui->tableWidgetCzlonkowie->rowCount();
-    ui->tableWidgetCzlonkowie->insertRow(row);
-    ui->tableWidgetCzlonkowie->setItem(row, 0, new QTableWidgetItem(imie));
-    ui->tableWidgetCzlonkowie->setItem(row, 1, new QTableWidgetItem(nazwisko));
-    ui->tableWidgetCzlonkowie->setItem(row, 2, new QTableWidgetItem(nazwaKarnetu));
-    ui->tableWidgetCzlonkowie->setItem(row, 3, new QTableWidgetItem("Tak"));
-    ui->tableWidgetCzlonkowie->setItem(row, 4, new QTableWidgetItem(QString::number(nowyCzlonek.getPozostalychWejsc())));
-    ui->tableWidgetCzlonkowie->setItem(row, 5, new QTableWidgetItem(dataWygasniecia.toString("yyyy-MM-dd hh:mm")));
+    odswiezTabeleCzlonkowie();
 
-    // Czyszczenie pól
     ui->lineEditImie->clear();
     ui->lineEditNazwisko->clear();
 
-    // Ustaw domyślną datę wygaśnięcia na GUI, jeśli masz takie pole
-    ui->dateTimeEditWygasniecie->setDateTime(QDateTime::currentDateTime().addDays(wybranyKarnet.getCzasTrwania()));
+    ui->dateTimeEditRozpoczecie->setDate(QDate::currentDate());
 }
 
 
@@ -196,6 +192,26 @@ void MainWindow::odswiezTabeleKarnety()
         ui->tableWidgetKarnety->setItem(row, 3, new QTableWidgetItem(lista[i].getLimitWejsc() == 0 ? "Nielimitowane" : QString::number(lista[i].getLimitWejsc())));
         ui->tableWidgetKarnety->setItem(row, 4, new QTableWidgetItem(lista[i].isAktywny() ? "Aktywny" : "Nieaktywny"));
         filteredIndexes.append(i); // zapamiętaj rzeczywisty indeks w managerze
+    }
+}
+
+void MainWindow::odswiezTabeleCzlonkowie()
+{
+    ui->tableWidgetCzlonkowie->setRowCount(0);
+    auto lista = czlonkowieManager.getCzlonkowie();
+    QDate currentTime = QDate::currentDate();
+    for(int i = 0; i < (int)lista.size(); ++i) {
+        int row = ui->tableWidgetCzlonkowie->rowCount();
+        ui->tableWidgetCzlonkowie->insertRow(row);
+        Czlonek czlonek = lista.at(i);
+        bool aktywny = czlonek.getDataWygasniecia() >= currentTime && currentTime >= czlonek.getDataAktywacji();
+        ui->tableWidgetCzlonkowie->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(czlonek.getImie())));
+        ui->tableWidgetCzlonkowie->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(czlonek.getNazwisko())));
+        ui->tableWidgetCzlonkowie->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(czlonek.getNazwaKarnetu())));
+        ui->tableWidgetCzlonkowie->setItem(row, 3, new QTableWidgetItem(aktywny ? "Tak" : "Nie"));
+        ui->tableWidgetCzlonkowie->setItem(row, 4, new QTableWidgetItem(czlonek.getDataAktywacji().toString("yyyy-MM-dd")));
+        ui->tableWidgetCzlonkowie->setItem(row, 5, new QTableWidgetItem(czlonek.getDataWygasniecia().toString("yyyy-MM-dd")));
+        ui->tableWidgetCzlonkowie->setItem(row, 6, new QTableWidgetItem(QString::number(czlonek.getPozostalychWejsc())));
     }
 }
 

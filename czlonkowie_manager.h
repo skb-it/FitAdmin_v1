@@ -11,7 +11,9 @@ class CzlonkowieManager {
 public:
     void dodajCzlonka(const Czlonek& czlonek);
     void zapiszDoPliku(const QString& nazwaPliku);
+    bool wczytajZPliku(const QString& nazwaPliku);
 
+    vector<Czlonek> getCzlonkowie() const;
 private:
     vector<Czlonek> listaCzlonkow;
 };

@@ -2,11 +2,17 @@
 
 using namespace std;
 
-Czlonek::Czlonek(const string& imie, const string& nazwisko,
-                 bool aktywny, const QDateTime& dataWygasniecia,
-                 const string& nazwaKarnetu, int pozostalychWejsc)
+Czlonek::Czlonek(
+        const string& imie,
+        const string& nazwisko,
+        bool aktywny,
+        const QDate& dataAktywacji,
+        const QDate& dataWygasniecia,
+        const string& nazwaKarnetu,
+        int pozostalychWejsc
+    )
     : imie(imie), nazwisko(nazwisko), aktywny(aktywny),
-    dataAktywacji(QDateTime::currentDateTime()),
+    dataAktywacji(dataAktywacji),
     dataWygasniecia(dataWygasniecia),
     nazwaKarnetu(nazwaKarnetu),
     pozostalychWejsc(pozostalychWejsc)
@@ -35,10 +41,10 @@ bool Czlonek::czyAktywny() const {
     return aktywny;
 }
 
-QDateTime Czlonek::getDataAktywacji() const {
+QDate Czlonek::getDataAktywacji() const {
     return dataAktywacji;
 }
 
-QDateTime Czlonek::getDataWygasniecia() const {
+QDate Czlonek::getDataWygasniecia() const {
     return dataWygasniecia;
 }

@@ -30,6 +30,7 @@ private:
 
 private:
     QVector<int> filteredIndexes;
+    void odswiezTabeleCzlonkowie();
     void odswiezTabeleKarnety();
     void wyczyscFormularzKarnet();
     int wybranyKarnet = -1; // -1 = tryb dodawania, >=0 = edycja istniejącego
