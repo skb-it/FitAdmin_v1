@@ -5,6 +5,9 @@
 #include "timetablewidget.h"
 #include "ui_mainwindow.h"
 #include "sprzet_manager.h"
+#include "logowanie.h"
+#include <QDesktopServices>
+#include <QUrl>
 
 extern CzlonkowieManager czlonkowieManager;
 
@@ -78,11 +81,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->stackedWidget->setCurrentWidget(ui->zajeciaStrona);
         timetable->setZajecia(zajeciaManager.getZajecia());
     });
-
-    connect(ui->toolButtonDodajTrenera,
-            &QToolButton::clicked,
-            this,
-            &MainWindow::on_toolButtonDodajTrenera_clicked);
 
     connect(ui->toolButtonEdytuj, &QToolButton::clicked, this, [=]() {
         int row = ui->tableWidgetSprzet->currentRow();
@@ -201,14 +199,12 @@ void MainWindow::on_toolButtonUsunZajecia_clicked()
         return;
     }
 
-    // Zbieramy wszystkie wybrane wiersze (bez powtórzeń)
     QSet<int> rowsToDelete;
     for (const QTableWidgetSelectionRange &range : selectedRanges) {
         for (int row = range.topRow(); row <= range.bottomRow(); ++row)
             rowsToDelete.insert(row);
     }
 
-    // Usuwamy od końca, by nie przesuwać indeksów
     QList<int> sortedRows = rowsToDelete.values();
     std::sort(sortedRows.begin(), sortedRows.end(), std::greater<int>());
 
@@ -247,9 +243,9 @@ void MainWindow::on_toolButtonZapiszKarnet_clicked()
 
     Karnet nowyKarnet(nazwa, cena, czasTrwania, limitWejsc, aktywny);
 
-    if (wybranyKarnet == -1) { // Dodawanie nowego
+    if (wybranyKarnet == -1) {
         karnetyManager.dodajKarnet(nowyKarnet);
-    } else { // Edycja istniejącego
+    } else {
         auto &karnety = karnetyManager.getKarnety();
         if (wybranyKarnet >= 0 && wybranyKarnet < (int) karnety.size()) {
             karnety[wybranyKarnet] = nowyKarnet;
@@ -299,8 +295,6 @@ void MainWindow::on_tableWidgetKarnety_itemSelectionChanged()
     if (selected.size() > 0) {
         int row = ui->tableWidgetKarnety->currentRow();
         auto &karnety = karnetyManager.getKarnety();
-        // row odpowiada indeksowi w filteredList, potrzebujemy prawdziwego indeksu!
-        // Dlatego w odswiezTabeleKarnety() przechowamy mapowanie:
         if (row >= 0 && row < filteredIndexes.size()) {
             wybranyKarnet = filteredIndexes[row];
             const Karnet &k = karnety[wybranyKarnet];
@@ -349,6 +343,22 @@ void MainWindow::on_toolButtonDodajZajecia_clicked()
         QMessageBox::warning(this, "Błąd", "Data zakończenia musi być po rozpoczęciu!");
         return;
     }
+    if (sala.trimmed().isEmpty()) {
+        QMessageBox::warning(this, "Błąd", "Wprowadź numer sali!");
+        return;
+    }
+    if (start.date() != end.date()) {
+        QMessageBox::warning(this, "Błąd", "Zajęcia muszą rozpoczynać się i kończyć tego samego dnia!");
+        return;
+    }
+    for (const Zajecia& inneZajecia : zajeciaManager.getZajecia()) {
+        if (inneZajecia.getSala() == sala && inneZajecia.getStart().date() == start.date()) {
+            if (!(end <= inneZajecia.getStart() || start >= inneZajecia.getEnd())) {
+                QMessageBox::warning(this, "Błąd", "W wybranej sali odbywają się już inne zajęcia w tym czasie!");
+                return;
+            }
+        }
+    }
     Zajecia z(trener.getId(),
               QString::fromStdString(trener.getImie() + " " + trener.getNazwisko()),
               start,
@@ -357,6 +367,7 @@ void MainWindow::on_toolButtonDodajZajecia_clicked()
               limit);
     zajeciaManager.dodajZajecia(z);
     zajeciaManager.zapiszDoPliku("zajecia.txt");
+    timetable->setZajecia(zajeciaManager.getZajecia());
     odswiezTabeleZajecia();
 }
 
@@ -436,7 +447,7 @@ void MainWindow::odswiezTabeleKarnety()
                                         4,
                                         new QTableWidgetItem(lista[i].isAktywny() ? "Aktywny"
                                                                                   : "Nieaktywny"));
-        filteredIndexes.append(i); // zapamiętaj rzeczywisty indeks w managerze
+        filteredIndexes.append(i);
     }
 }
 
@@ -473,7 +484,11 @@ void MainWindow::odswiezTabeleCzlonkowie()
     }
 }
 
-// Pomocnicza funkcja do czyszczenia formularza:
+void MainWindow::on_toolButtonSklep_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://wkdzik.pl"));
+}
+
 void MainWindow::wyczyscFormularzKarnet()
 {
     ui->lineEditNazwaKarnetu->clear();
@@ -481,4 +496,16 @@ void MainWindow::wyczyscFormularzKarnet()
     ui->spinBoxCzasTrwania->setValue(1);
     ui->spinBoxLimitWejsc->setValue(0);
     ui->comboBoxStatus->setCurrentIndex(0);
+}
+
+void MainWindow::on_toolButtonWyloguj_clicked()
+{
+    this->close();
+
+    Logowanie logowanie;
+    if (logowanie.exec() == QDialog::Accepted) {
+        this->show();
+    } else {
+        qApp->quit();
+    }
 }

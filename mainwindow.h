@@ -29,6 +29,8 @@ private slots:
     void on_toolButtonDodajZajecia_clicked();
     void on_toolButtonDodajTrenera_clicked();
     void on_toolButtonUsunZajecia_clicked();
+    void on_toolButtonWyloguj_clicked();
+    void on_toolButtonSklep_clicked();
 
 private:
     Ui::MainWindow *ui;
