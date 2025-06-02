@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "czlonkowie_manager.h"
+#include "timetablewidget.h"
 
 extern CzlonkowieManager czlonkowieManager;
 
@@ -12,10 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    timetable = new TimetableWidget;
+    ui->verticalLayoutWykresZajec->addWidget(timetable);
+
     karnetyManager.wczytajZPliku("karnety.txt");
     ui->stackedWidget->setCurrentIndex(0); // zawsze ustawiaj stronę 0 po uruchomieniu aplikacji
     connect(ui->toolButtonPanel, &QToolButton::clicked, this, [this]() {
-        ui->stackedWidget->setCurrentIndex(0);  // Przełącz na stronę 0
+        ui->stackedWidget->setCurrentWidget(ui->mainPage);
     });
 
     connect(ui->toolButtonCzlonkowie, &QToolButton::clicked, this, [this]() {
@@ -23,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
         odswiezTabeleCzlonkowie();
         ui->dateTimeEditRozpoczecie->setMinimumDate(QDate::currentDate());
         ui->dateTimeEditRozpoczecie->setDate(QDate::currentDate());
-        ui->stackedWidget->setCurrentIndex(1);  // Przełącz na stronę 1 (np. członkowie)
+        ui->stackedWidget->setCurrentWidget(ui->czlonkowieStrona);
         ui->comboBoxKarnet->clear();
         for (const auto& k : karnetyManager.getKarnety()) {
             if(k.isAktywny()){
@@ -33,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->toolButtonKarnety, &QToolButton::clicked, this, [this]() {
-        ui->stackedWidget->setCurrentIndex(2);
+        ui->stackedWidget->setCurrentWidget(ui->karnetyStrona);
         karnetyManager.wczytajZPliku("karnety.txt");
         odswiezTabeleKarnety();
     });
@@ -42,7 +46,28 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->toolButtonUsunKarnet, &QToolButton::clicked, this, &MainWindow::on_toolButtonUsunKarnet_clicked);
     connect(ui->lineEditSzukajKarnet, &QLineEdit::textChanged, this, &MainWindow::on_lineEditSzukajKarnet_textChanged);
     connect(ui->tableWidgetKarnety, &QTableWidget::itemSelectionChanged, this, &MainWindow::on_tableWidgetKarnety_itemSelectionChanged);
-    connect(ui->toolButtonDodajKarnet, &QToolButton::clicked, this, &MainWindow::on_toolButtonDodajKarnet_clicked);
+
+    trenerzyManager.wczytajZPliku("trenerzy.txt");
+    zajeciaManager.wczytajZPliku("zajecia.txt");
+
+    connect(ui->toolButtonTrenerzy, &QToolButton::clicked, this, [this]() {
+        trenerzyManager.wczytajZPliku("trenerzy.txt");
+        odswiezTabeleTrenerzy();
+        ui->stackedWidget->setCurrentWidget(ui->trenerzyStrona);
+    });
+
+    connect(ui->toolButtonZajecia, &QToolButton::clicked, this, [this]() {
+        zajeciaManager.wczytajZPliku("zajecia.txt");
+        odswiezTabeleZajecia();
+        odswiezComboBoxTrenerzyZajecia();
+        ui->dateTimeEditStart->setDateTime(QDateTime::currentDateTime());
+        ui->dateTimeEditEnd->setDateTime(QDateTime::currentDateTime());
+        ui->stackedWidget->setCurrentWidget(ui->zajeciaStrona);
+        timetable->setZajecia(zajeciaManager.getZajecia());
+    });
+
+    connect(ui->toolButtonDodajTrenera, &QToolButton::clicked, this, &MainWindow::on_toolButtonDodajTrenera_clicked);
+
 
 }
 
@@ -83,6 +108,39 @@ void MainWindow::on_toolButtonDodajCzlonka_clicked()
     ui->lineEditNazwisko->clear();
 
     ui->dateTimeEditRozpoczecie->setDate(QDate::currentDate());
+}
+
+
+void MainWindow::on_toolButtonUsunZajecia_clicked()
+{
+    auto selectedRanges = ui->tableWidgetZajecia->selectedRanges();
+    if(selectedRanges.isEmpty()) {
+        QMessageBox::warning(this, "Błąd", "Wybierz zajęcia do usunięcia!");
+        return;
+    }
+
+    // Zbieramy wszystkie wybrane wiersze (bez powtórzeń)
+    QSet<int> rowsToDelete;
+    for (const QTableWidgetSelectionRange& range : selectedRanges) {
+        for (int row = range.topRow(); row <= range.bottomRow(); ++row)
+            rowsToDelete.insert(row);
+    }
+
+    // Usuwamy od końca, by nie przesuwać indeksów
+    QList<int> sortedRows = rowsToDelete.values();
+    std::sort(sortedRows.begin(), sortedRows.end(), std::greater<int>());
+
+    auto &zajecia = zajeciaManager.getZajecia();
+
+    for (int row : sortedRows) {
+        if (row >= 0 && row < zajecia.size()) {
+            zajeciaManager.usunZajecia(row);
+        }
+    }
+
+    zajeciaManager.zapiszDoPliku("zajecia.txt");
+    odswiezTabeleZajecia();
+    timetable->setZajecia(zajeciaManager.getZajecia());
 }
 
 
@@ -174,6 +232,84 @@ void MainWindow::on_tableWidgetKarnety_itemSelectionChanged()
     }
 }
 
+void MainWindow::on_toolButtonDodajTrenera_clicked()
+{
+    QString imie = ui->lineEditImieTrener->text();
+    QString nazwisko = ui->lineEditNazwiskoTrener->text();
+    if(imie.trimmed().isEmpty() || nazwisko.trimmed().isEmpty()){
+        QMessageBox::warning(this, "Błąd", "Imię i nazwisko nie mogą być puste!");
+        return;
+    }
+    Trener t(kolejnyIdTrenera++, imie.toStdString(), nazwisko.toStdString());
+    trenerzyManager.dodajTrenera(t);
+    trenerzyManager.zapiszDoPliku("trenerzy.txt");
+    odswiezTabeleTrenerzy();
+    ui->lineEditImieTrener->clear();
+    ui->lineEditNazwiskoTrener->clear();
+}
+
+void MainWindow::on_toolButtonDodajZajecia_clicked()
+{
+    int trenerIdx = ui->comboBoxTrenerProwadzacy->currentIndex();
+    if(trenerIdx < 0 || trenerIdx >= trenerzyManager.getTrenerzy().size()) {
+        QMessageBox::warning(this, "Błąd", "Wybierz trenera!");
+        return;
+    }
+    const Trener& trener = trenerzyManager.getTrenerzy()[trenerIdx];
+    QDateTime start = ui->dateTimeEditStart->dateTime();
+    QDateTime end = ui->dateTimeEditEnd->dateTime();
+    QString sala = ui->lineEditSala->text();
+    int limit = ui->spinBoxLimitMiejsc->value();
+    if(limit < 1) {
+        QMessageBox::warning(this, "Błąd", "Limit miejsc musi być większy od zera!");
+        return;
+    }
+    if(start >= end) {
+        QMessageBox::warning(this, "Błąd", "Data zakończenia musi być po rozpoczęciu!");
+        return;
+    }
+    Zajecia z(trener.getId(), QString::fromStdString(trener.getImie() + " " + trener.getNazwisko()), start, end, sala, limit);
+    zajeciaManager.dodajZajecia(z);
+    zajeciaManager.zapiszDoPliku("zajecia.txt");
+    odswiezTabeleZajecia();
+}
+
+void MainWindow::odswiezTabeleTrenerzy()
+{
+    ui->tableWidgetTrenerzy->setRowCount(0);
+    auto lista = trenerzyManager.getTrenerzy();
+    for (const auto& t : lista) {
+        int row = ui->tableWidgetTrenerzy->rowCount();
+        ui->tableWidgetTrenerzy->insertRow(row);
+        ui->tableWidgetTrenerzy->setItem(row, 0, new QTableWidgetItem(QString::number(t.getId())));
+        ui->tableWidgetTrenerzy->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(t.getImie())));
+        ui->tableWidgetTrenerzy->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(t.getNazwisko())));
+    }
+}
+
+void MainWindow::odswiezComboBoxTrenerzyZajecia()
+{
+    ui->comboBoxTrenerProwadzacy->clear();
+    for(const auto& t : trenerzyManager.getTrenerzy()) {
+        ui->comboBoxTrenerProwadzacy->addItem(QString::number(t.getId()) + " - " + QString::fromStdString(t.getImie()) + " " + QString::fromStdString(t.getNazwisko()));
+    }
+}
+
+void MainWindow::odswiezTabeleZajecia()
+{
+    ui->tableWidgetZajecia->setRowCount(0);
+    for(const auto& z : zajeciaManager.getZajecia()) {
+        int row = ui->tableWidgetZajecia->rowCount();
+        ui->tableWidgetZajecia->insertRow(row);
+        ui->tableWidgetZajecia->setItem(row, 0, new QTableWidgetItem(z.getTrenerImieNazwisko()));
+        ui->tableWidgetZajecia->setItem(row, 1, new QTableWidgetItem(z.getStart().toString("yyyy-MM-dd HH:mm")));
+        ui->tableWidgetZajecia->setItem(row, 2, new QTableWidgetItem(z.getEnd().toString("yyyy-MM-dd HH:mm")));
+        ui->tableWidgetZajecia->setItem(row, 3, new QTableWidgetItem(z.getSala()));
+        ui->tableWidgetZajecia->setItem(row, 4, new QTableWidgetItem(QString::number(z.getLimitMiejsc())));
+        ui->tableWidgetZajecia->setItem(row, 5, new QTableWidgetItem(QString::number(z.getWolnychMiejsc())));
+    }
+}
+
 void MainWindow::odswiezTabeleKarnety()
 {
     QString filter = ui->lineEditSzukajKarnet->text().trimmed().toLower();
@@ -224,3 +360,4 @@ void MainWindow::wyczyscFormularzKarnet()
     ui->spinBoxLimitWejsc->setValue(0);
     ui->comboBoxStatus->setCurrentIndex(0);
 }
+

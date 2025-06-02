@@ -1,34 +1,31 @@
 #ifndef CZLONEK_H
 #define CZLONEK_H
 
+#include "osoba.h"
+
 #include <string>
 #include <QDateTime>
 
 using namespace std;
 
-class Czlonek {
-private:
-    string imie;
-    string nazwisko;
-    string nazwaKarnetu;
+class Czlonek : public Osoba {
     bool aktywny;
     QDate dataAktywacji;
     QDate dataWygasniecia;
+    string nazwaKarnetu;
     int pozostalychWejsc;
 
 public:
     Czlonek(
-            const string& imie,
-            const string& nazwisko,
-            bool aktywny,
-            const QDate& dataAktywacji,
-            const QDate& dataWygasniecia,
-            const string& nazwaKarnetu,
-            int pozostalychWejsc
-    );
+        const string& imie,
+        const string& nazwisko,
+        bool aktywny,
+        const QDate& dataAktywacji,
+        const QDate& dataWygasniecia,
+        const string& nazwaKarnetu,
+        int pozostalychWejsc
+        );
 
-    string getImie() const;
-    string getNazwisko() const;
     string getNumerKarnetu() const;
     string getNazwaKarnetu() const;
     bool czyAktywny() const;
