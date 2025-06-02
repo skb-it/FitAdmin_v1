@@ -836,8 +836,8 @@ email: martin.paszow@fitadmin.com</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>791</width>
-             <height>635</height>
+             <width>274</width>
+             <height>315</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayoutZajecia">
@@ -995,17 +995,17 @@ email: martin.paszow@fitadmin.com</string>
           </column>
           <column>
            <property name="text">
-            <string>New Column</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
             <string>Nazwa</string>
            </property>
           </column>
           <column>
            <property name="text">
             <string>Ilość</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
            </property>
           </column>
           <column>
@@ -1088,7 +1088,7 @@ email: martin.paszow@fitadmin.com</string>
      <x>0</x>
      <y>0</y>
      <width>1044</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
